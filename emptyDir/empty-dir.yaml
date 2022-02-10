@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-deployment
+  labels:
+    app: emptydir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emptydir
+  template:
+    metadata:
+      labels:
+        app: emptydir
+    spec:
+      containers:
+        - name: nodeapp
+          image: prraj/nodeapp:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: emptydir
+              mountPath: /app/src/nodeapp/fileStore
+        - name: ubuntu
+          image: ubuntu
+          command: ["/bin/bash", "-c", "--"]
+          args: ["while true; do sleep 30; done;"]
+          volumeMounts:
+            - mountPath: /app/src/fileStore
+              name: emptydir
+      volumes:
+        - name: emptydir
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emptydir-service
+spec:
+  selector:
+    app: emptydir
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      nodePort: 30007
