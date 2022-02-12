@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfig
+data:
+  "district": "Aligarh"
+  "state": "UP"
+  "country": "India"
+  "pincode": "271005"
