@@ -40,9 +40,7 @@ metadata:
 spec:
   selector:
     app: emptydir
-  type: NodePort
   ports:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-      nodePort: 30007

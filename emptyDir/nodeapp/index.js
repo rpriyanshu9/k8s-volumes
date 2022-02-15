@@ -6,6 +6,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+app.get("/", (req, res) => {
+  res.send("You've reached the node.js server. :)");
+});
+
 app.post("/write", (req, res) => {
   try {
     const { content } = req.body;
